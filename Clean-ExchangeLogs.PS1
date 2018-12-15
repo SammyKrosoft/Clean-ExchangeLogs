@@ -22,7 +22,7 @@ Function CleanLogfiles($TargetFolder)
         foreach ($File in $Files)
             {
                 $ProgressMessage = "Deleting file $FullFileName"
-                Write-Progress -Activity "Deleting files from $TargetFolder" -Status $ProgressMessage -Id 2 -ParentId 1 PercentComplete $($Counter/$($Files.count)*100)
+                Write-Progress -Activity "Deleting files from $TargetFolder" -Status $ProgressMessage -Id 2 -ParentId 1 -PercentComplete $($Counter/$($Files.count)*100)
                 $FullFileName = $File.FullName
                 Remove-Item $FullFileName -ErrorAction SilentlyContinue | out-null
                 $counter++
@@ -33,15 +33,16 @@ Else {
     }
 }
 
-Write-Progress -Activity "IIS Logs" -Status "IIS Logs" -Id 1 PercentComplete 0
+Write-Progress -Activity "Logging cleanup" -Status "IIS Logs" -Id 1 -PercentComplete 0
 CleanLogfiles($IISLogPath)
-Write-Progress -Activity "Exchange Logging Path" -Status """" -Id 2 -ParentId 1 PercentComplete $($Counter/$($Files.count)*100)
-Write-Progress -Activity "Deleting files from $TargetFolder" -Status $ProgressMessage -Id 2 -ParentId 1 PercentComplete $($Counter/$($Files.count)*100)
+
+Write-Progress -Activity "Logging cleanup" -Status "Deleting log files from Exchange Logging" -Id 1 -PercentComplete 25
 CleanLogfiles($ExchangeLoggingPath)
-Write-Progress -Activity "Deleting files from $TargetFolder" -Status $ProgressMessage -Id 2 -ParentId 1 PercentComplete $($Counter/$($Files.count)*100)
-Write-Progress -Activity "Deleting files from $TargetFolder" -Status $ProgressMessage -Id 2 -ParentId 1 PercentComplete $($Counter/$($Files.count)*100)
+
+Write-Progress -Activity "Logging cleanup" -Status "Deleting ETL traces" -Id 1 -PercentComplete 50
 CleanLogfiles($ETLLoggingPath)
-Write-Progress -Activity "Deleting files from $TargetFolder" -Status $ProgressMessage -Id 2 -ParentId 1 PercentComplete $($Counter/$($Files.count)*100)
-Write-Progress -Activity "Deleting files from $TargetFolder" -Status $ProgressMessage -Id 2 -ParentId 1 PercentComplete $($Counter/$($Files.count)*100)
+
+Write-Progress -Activity "Logging cleanup" -Status "Deleting log files from Exchange Logging" -Id 1 -PercentComplete 75
 CleanLogfiles($ETLLoggingPath2)
-Write-Progress -Activity "Deleting files from $TargetFolder" -Status $ProgressMessage -Id 2 -ParentId 1 PercentComplete $($Counter/$($Files.count)*100)
+
+Write-Progress -Activity "Logging cleanup" -Status "CLEANUP COMPLETE" -Id 1 -PercentComplete 100
