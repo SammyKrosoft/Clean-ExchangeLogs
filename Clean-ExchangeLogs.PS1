@@ -18,12 +18,13 @@ Function CleanLogfiles($TargetFolder)
         $Now = Get-Date
         $LastWrite = $Now.AddDays(-$days)
         Try {
-            $Files = Get-ChildItem $TargetFolder  -Recurse -ErrorAction STOP | Where-Object {$_.Name -like "*.log" -or $_.Name -like "*.blg" -or $_.Name -like "*.etl"}  | where {$_.lastWriteTime -le "$lastwrite"} | Select-Object FullName  
+            $Files = Get-ChildItem $TargetFolder  -Recurse -ErrorAction STOP | Where-Object {$_.Name -like "*.log" -or $_.Name -like "*.blg" -or $_.Name -like "*.etl"}  | where {$_.lastWriteTime -le "$lastwrite"} | Select-Object FullName 
         } Catch {
             Write-Host "Issue trying to access $TargetFolder folder - you may not have the proper rights or the folder is not in this location - please retry with elevated PowerShell console" -ForegroundColor Yellow -BackgroundColor Blue
         }
 
         $Counter = 0
+        
         foreach ($File in $Files)
             {
                 $ProgressMessage = "Deleting file $FullFileName"
@@ -33,8 +34,8 @@ Function CleanLogfiles($TargetFolder)
                 $counter++
             }
        }
-Else {
-    Write-Host "The folder $TargetFolder doesn't exist! Check the folder path!" -ForegroundColor "red"
+    Else {
+        Write-Host "The folder $TargetFolder doesn't exist! Check the folder path!" -ForegroundColor "red"
     }
 }
 
