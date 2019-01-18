@@ -9,7 +9,7 @@ $IISLogPath="C:\inetpub\logs\LogFiles\"
 $CurrentExchangeInstallPath = $env:ExchangeInstallPath
 $ExchangeLoggingPath=$CurrentExchangeInstallPath + ("Logging\")
 $ETLLoggingPath=$CurrentExchangeInstallPath + ("Bin\Search\Ceres\Diagnostics\ETLTraces\")
-$ETLLoggingPath2=$CurrentExchangeInstallPath + ("Bin\Search\Ceres\Diagnostics\Logs")
+$ETLLoggingPath2=$CurrentExchangeInstallPath + ("Bin\Search\Ceres\Diagnostics\Logs\")
 Function CleanLogfiles($TargetFolder)
 {
   write-host -debug -ForegroundColor Yellow -BackgroundColor Cyan $TargetFolder
@@ -48,7 +48,7 @@ CleanLogfiles($ExchangeLoggingPath)
 Write-Progress -Activity "Logging cleanup" -Status "Deleting ETL traces" -Id 1 -PercentComplete 50
 CleanLogfiles($ETLLoggingPath)
 
-Write-Progress -Activity "Logging cleanup" -Status "Deleting log files from Exchange Logging" -Id 1 -PercentComplete 75
+Write-Progress -Activity "Logging cleanup" -Status "Deleting other ETL traces" -Id 1 -PercentComplete 75
 CleanLogfiles($ETLLoggingPath2)
 
 Write-Progress -Activity "Logging cleanup" -Status "CLEANUP COMPLETE" -Id 1 -PercentComplete 100
